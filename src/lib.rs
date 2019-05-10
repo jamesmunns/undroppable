@@ -23,10 +23,25 @@ impl Undroppable {
 mod test {
     use crate::Undroppable;
 
+    struct Contains {
+        foo: String,
+        bar: Undroppable,
+    }
+
     #[test]
     fn test_defuse() {
         let x = Undroppable;
         x.set_down_gently();
+
+        let y = Contains {
+            foo: "hi".into(),
+            bar: Undroppable,
+        };
+
+        let (a, b) = (y.foo, y.bar);
+        b.set_down_gently();
+
+        println!("{}", a);
     }
 
     // This doesn't compile
